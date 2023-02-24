@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>RWP Weather Web</title>
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Weather Forecast {%location%}</h1>
+            <i class="fa fa-cloud"></i>
+        </div>
+        <div class="content">
+            <div class="card">
+                <h2>{%location2%},{%Country%}</h2>
+                <p class="temp">{%humidity%}&deg;C</p>
+                <p class="desc"><b>Sunrise </b>: {%Sunrise%} <br><b style="color: red;">Sunset </b>: {%Sunset%}</p>
+                <p class="desc" id="date"></p>
+                <!-- <img src="bot3.gif" style="width: 100%; border-radius: 50rem;" /> -->
+            </div>
+            <div class="card">
+                <h2>Today</h2>
+                <i class="fa fa-sun-o"></i>
+                <p class="temp">{%tempval%}&deg;C</p>
+                <p class="desc">{%Clearsky%}</p>
+                <p class="desc">Pressure is : {%pressure%}</p>
+                <p class="desc">Min Tem: {%tempmin%} | Max tem: {%tempmax%}</p>
+
+                <img src="https://miro.medium.com/max/512/0*JlS_e6NuTt1bh6-G.gif" />
+            </div>
+            <div class="card">
+                <h2>Tomorrow</h2>
+                <i class="fa fa-cloud"></i>
+                <p class="temp">20&deg;C</p>
+                <p class="desc">Partly cloudy with chance of rain</p>
+                <p class="desc">Wind speed {%wind%} km/h</p>
+                <img src="https://i.gifer.com/XcFC.gif" style="width: 100%;" />
+            </div>
+            <div class="card">
+                <h2>Next 7 Days</h2>
+                <i class="fa fa-calendar"></i>
+                <p class="temp">20&deg;C - 30&deg;C</p>
+                <p class="desc">Mix of sun and clouds with occasional showers</p>
+                <p class="desc">{%cloudsm%}</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p id="tw3"> </p>
+        </div>
+    </div>
+    <script>
+        const date = document.getElementById("date");
+        const tw3 = document.getElementById("tw3");
+        const tempStatus = "{%temStatus%}"
+        
+
+        const Wekdays = new Array(7);
+        Wekdays[1] = "Monday";
+        Wekdays[2] = "Tuesday";
+        Wekdays[3] = "Wednesday";
+        Wekdays[4] = "Thursday";
+        Wekdays[5] = "Friday";
+        Wekdays[6] = "Saturday";
+        Wekdays[7] = "Sunday";
+        
+        const curenetDay = () => {
+            const Day = new Date();
+            tw3.innerHTML= "@"+Day.getFullYear()+" Weather Aplication";
+            return Wekdays[Day.getDay()];
+        }
+
+        const cuerenttime = () => {
+            const months = [
+                "jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ]
+            const time = new Date();
+            console.log(time.getDate());
+            console.log(months[time.getMonth()]);
+
+            let hours = time.getHours();
+            let mins = time.getMinutes();
+
+            let sunset = "AM"
+            if (hours > 11) {
+                sunset = "PM"
+            }
+            if (hours > 12) {
+                hours -= 12;
+            }
+            if (mins < 10) {
+                mins = "0" + mins;
+            }
+
+
+            return (` ${time.getDate()}/${months[time.getMonth()]} | ${hours}:${mins} ${sunset}`)
+        }
+        // curenetDay();
+        // cuerenttime();
+        date.innerHTML = curenetDay() + " | " + cuerenttime();
+    </script>
+</body>
+
+</html>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        color: #fff;
+        background: linear-gradient(to right, #9b8787, #0000ff);
+    }
+
+    .container {
+        /* max-width: 800px; */
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .fa-sun-o {
+        color: yellow;
+    }
+
+    .fa-cloud {
+        color: white
+    }
+
+    .fa-calendar {
+        color: aqua;
+    }
+
+    b {
+        color: rgb(31, 236, 13);
+        font-size: 1.5rem;
+    }
+
+    .card .fa {
+        animation: fas-anime 3s linear infinite alternate;
+    }
+
+    @keyframes fas-anime {
+        from {
+            transform: scale(1.2);
+        }
+
+        to {
+            transform: scale(1.8);
+        }
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header h1 {
+        font-size: 3em;
+        margin-right: 10px;
+    }
+
+    .header i {
+        font-size: 3em;
+    }
+
+    .content {
+        display: flex;
+        /*  flex-wrap: wrap; */
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    .card {
+        width: 30%;
+        /* background: #fff; */
+        padding: 20px;
+        margin: 20px 0;
+        text-align: center;
+        border-radius: 5px;
+        height: 35rem;
+        box-shadow: 0px 0px 10px #ccc;
+    }
+
+    .card i {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    .card h2 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .temp {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .desc {
+        font-size: 1.2em;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .footer p {
+        font-size: 1.2em;
+    }
+</style>
